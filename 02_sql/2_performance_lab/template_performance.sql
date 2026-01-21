@@ -1,5 +1,5 @@
 /*
-RETO PARTE B: LABORATORIO DE PERFORMANCE
+MISIÓN B: LABORATORIO DE PERFORMANCE - RETO 5 COMPLETADO
 Objetivo: Comparar CROSS JOIN vs INNER JOIN
 */
 
@@ -19,11 +19,11 @@ PRINT '--- EJECUTANDO CROSS JOIN (Producto Cartesiano) ---';
 -- Si tienes 5 clientes y 5 productos, traerá 25 filas.
 -- Si tienes 1 millón de clientes... bueno, ya sabes.
 
-SELECT
-c.Nombre AS Cliente,
-p.Nombre AS Producto
-FROM Cliente c
-CROSS JOIN Producto p;
+SELECT 
+    v.Transaccion_ID,
+    c.Cliente_Nombre
+FROM VENTAS v
+CROSS JOIN CLIENTES c;
 
 -- PREGUNTA DE ANÁLISIS:
 -- ¿Cuántos "Logical Reads" muestra la pestaña Messages?
@@ -36,14 +36,12 @@ PRINT '--- EJECUTANDO INNER JOIN (Ventas Reales) ---';
 
 -- Esta consulta usa la FK para unir solo lo que existe.
 
-SELECT
-c.Nombre AS Cliente,
-p.Nombre AS Producto,
-v.Fecha,
-v.Cantidad
-FROM Venta v
-INNER JOIN Cliente c ON v.ClienteID = c.ClienteID
-INNER JOIN Producto p ON v.ProductoID = p.ProductoID;
+SELECT 
+    v.Transaccion_ID,
+    c.Cliente_Nombre
+FROM VENTAS v
+INNER JOIN CLIENTES c
+    ON v.Cliente_ID = c.Cliente_ID;
 
 -- COMPARACIÓN:
 -- Mira los Logical Reads aquí. Deberían ser drásticamente menores.
